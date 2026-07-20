@@ -3022,10 +3022,25 @@ final class BrowserPanel: Panel, ObservableObject {
                 && self?.isMainFrameProvisionalNavigationActive == false
                 && self?.webView.url != nil
         },
-        clipboardWriter: { prompt in
+        clipboardWriter: { [weak self] prompt in
             let pasteboard = NSPasteboard.general
             pasteboard.clearContents()
-            return pasteboard.setString(prompt, forType: .string)
+            let wrote = pasteboard.setString(prompt, forType: .string)
+            // Also inject the context into the browser's paired terminal so the
+            // user does not have to paste. The clipboard write above is kept as a
+            // fallback (e.g. workspaces with no terminal).
+            if let self {
+                NotificationCenter.default.post(
+                    name: .browserDesignModeDidSendContext,
+                    object: nil,
+                    userInfo: [
+                        BrowserDesignModeDeliveryKey.workspaceId: self.workspaceId,
+                        BrowserDesignModeDeliveryKey.browserPanelId: self.id,
+                        BrowserDesignModeDeliveryKey.content: prompt,
+                    ]
+                )
+            }
+            return wrote
         },
         onActivityChanged: { [weak self] in
             self?.handleDesignModeActivityChanged()

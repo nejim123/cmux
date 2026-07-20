@@ -13,3 +13,16 @@ extension AppDelegate {
         return true
     }
 }
+
+extension Notification.Name {
+    /// Posted after design-mode context is copied, so it can also be injected
+    /// into the browser's paired terminal (see `handleBrowserDesignModeDidSendContext`).
+    static let browserDesignModeDidSendContext = Notification.Name("cmux.browserDesignModeDidSendContext")
+}
+
+/// `userInfo` keys for `.browserDesignModeDidSendContext`.
+enum BrowserDesignModeDeliveryKey {
+    static let workspaceId = "workspaceId"
+    static let browserPanelId = "browserPanelId"
+    static let content = "content"
+}

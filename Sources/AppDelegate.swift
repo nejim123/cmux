@@ -1328,6 +1328,12 @@ final class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCent
         )
         NotificationCenter.default.addObserver(
             self,
+            selector: #selector(handleBrowserDesignModeDidSendContext(_:)),
+            name: .browserDesignModeDidSendContext,
+            object: nil
+        )
+        NotificationCenter.default.addObserver(
+            self,
             selector: #selector(handleFeedRequestFocus(_:)),
             name: .feedRequestFocus,
             object: nil
@@ -9441,6 +9447,24 @@ final class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCent
         )
 #endif
         sendTextWhenReady(content, to: workspace, preferredPanelId: returnPanelId)
+    }
+
+    /// Injects design-mode context into the browser's paired terminal and focuses
+    /// it, so the user does not have to paste. The clipboard copy already happened
+    /// (see `BrowserPanel`'s `clipboardWriter`), so a missing terminal degrades to
+    /// the prior copy-only behavior rather than losing the context.
+    @objc private func handleBrowserDesignModeDidSendContext(_ notification: Notification) {
+        guard let workspaceId = notification.userInfo?[BrowserDesignModeDeliveryKey.workspaceId] as? UUID,
+              let content = notification.userInfo?[BrowserDesignModeDeliveryKey.content] as? String else {
+            return
+        }
+        guard let manager = tabManagerFor(tabId: workspaceId),
+              let workspace = manager.tabs.first(where: { $0.id == workspaceId }),
+              let terminalPanelId = workspace.terminalPanelForDesignModeDelivery?.id else {
+            return
+        }
+        manager.focusTab(workspaceId, surfaceId: terminalPanelId, suppressFlash: true)
+        sendTextWhenReady(content, to: workspace, preferredPanelId: terminalPanelId)
     }
 
     nonisolated private static func debugShortId(_ id: UUID?) -> String {

@@ -2194,6 +2194,19 @@ final class Workspace: Identifiable, ObservableObject {
         return panel
     }
 
+    /// The terminal that should receive browser design-mode context: the focused
+    /// terminal when one is focused (uncommon during design mode, since the
+    /// browser holds focus), otherwise the first terminal in display order — the
+    /// paired terminal in the common one-terminal/one-browser layout. Nil when the
+    /// workspace has no terminal panel.
+    var terminalPanelForDesignModeDelivery: TerminalPanel? {
+        if let focused = focusedTerminalPanel { return focused }
+        for panelId in surfaceList.orderedPanelIds {
+            if let terminal = panels[panelId] as? TerminalPanel { return terminal }
+        }
+        return nil
+    }
+
     /// Forwards to
     /// ``WorkspaceSurfaceListModel/representativePanelIdForWorkspaceManualUnread()``.
     func representativePanelIdForWorkspaceManualUnread() -> UUID? {
