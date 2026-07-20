@@ -1,0 +1,8 @@
+pid: 90065
+app: /Users/abdulazizalbahar/Library/Developer/CoreSimulator/Devices/9D18DAE3-9F58-430C-9C9F-B8E1366320C4/data/Containers/Bundle/Application/6E0F2901-A4D9-49CD-A9EC-F85D418FA044/cmux.app/cmux
+version: 
+macos: 26.5.2 (25F84)
+captured: Mon Jul 20 10:44:29 PDT 2026
+threads: 10
+  PID  %CPU %MEM    RSS      VSZ ELAPSED STAT   WQ
+90065  98.5  0.4 263888 410555568   03:37 Rs      5
