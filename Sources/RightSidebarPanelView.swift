@@ -246,6 +246,9 @@ struct RightSidebarPanelView: View {
                     }
                 }
                 Spacer(minLength: 0)
+                if fileExplorerState.mode == .files {
+                    openInCursorButton
+                }
                 if fileExplorerState.mode.canOpenAsPane {
                     openAsPaneButton(mode: fileExplorerState.mode)
                 }
@@ -262,6 +265,47 @@ struct RightSidebarPanelView: View {
         .reportRightSidebarChromeGeometryForBonsplitUITest(
             isVisible: true,
             titlebarHeight: titlebarHeight
+        )
+    }
+
+    /// Opens the selected file/folder (or the workspace root when nothing is
+    /// selected) in the Cursor IDE. Files-mode only. The path is read inside the
+    /// action — never in the view body — so this button never couples modeBar
+    /// re-renders to file-explorer selection changes.
+    private var openInCursorButton: some View {
+        Button {
+            openSelectionInCursor()
+        } label: {
+            HeaderChromeIconStyle.symbol("arrow.up.forward.app")
+        }
+        .buttonStyle(RightSidebarHeaderIconButtonStyle(iconGeometryKeyPrefix: "rightSidebarHeaderOpenInCursorIcon"))
+        .frame(
+            width: RightSidebarChromeMetrics.headerControlSize,
+            height: RightSidebarChromeMetrics.headerControlSize
+        )
+        .rightSidebarHeaderControlAlignment()
+        .safeHelp(String(localized: "rightSidebar.openInCursor.tooltip", defaultValue: "Open in Cursor"))
+        .accessibilityLabel(String(localized: "rightSidebar.openInCursor.accessibilityLabel", defaultValue: "Open in Cursor"))
+        .accessibilityIdentifier("RightSidebar.openInCursorButton")
+        .titlebarInteractiveControl()
+    }
+
+    private func openSelectionInCursor() {
+        let target = fileExplorerStore.selectedPath ?? fileExplorerStore.rootPath
+        guard !target.isEmpty else { return }
+        let fileURL = URL(fileURLWithPath: target)
+        // Cursor's LaunchServices bundle identifier.
+        let cursorBundleID = "com.todesktop.230313mzl4w4u92"
+        guard let appURL = NSWorkspace.shared.urlForApplication(withBundleIdentifier: cursorBundleID) else {
+            // Cursor not installed — reveal in Finder so the action is never a no-op.
+            NSWorkspace.shared.activateFileViewerSelecting([fileURL])
+            return
+        }
+        NSWorkspace.shared.open(
+            [fileURL],
+            withApplicationAt: appURL,
+            configuration: NSWorkspace.OpenConfiguration(),
+            completionHandler: nil
         )
     }
 
@@ -303,7 +347,7 @@ struct RightSidebarPanelView: View {
         )
         return ZStack {
             Button(action: onClose) {
-                HeaderChromeIconStyle.symbol("xmark")
+                HeaderChromeIconStyle.symbol("sidebar.right")
             }
             .buttonStyle(RightSidebarHeaderIconButtonStyle(iconGeometryKeyPrefix: "rightSidebarHeaderCloseIcon"))
             .frame(

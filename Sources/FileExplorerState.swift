@@ -48,7 +48,10 @@ final class FileExplorerState: ObservableObject {
 
     init() {
         let defaults = UserDefaults.standard
-        self.isVisible = defaults.bool(forKey: "fileExplorer.isVisible")
+        // Default the file tree open on first run; a user's explicit toggle
+        // (persisted below via didSet) still wins on later launches.
+        let storedVisible = defaults.object(forKey: "fileExplorer.isVisible")
+        self.isVisible = storedVisible == nil ? true : defaults.bool(forKey: "fileExplorer.isVisible")
         let storedWidth = defaults.double(forKey: "fileExplorer.width")
         self.width = storedWidth > 0 ? CGFloat(storedWidth) : 220
         let storedPosition = defaults.double(forKey: "fileExplorer.dividerPosition")
