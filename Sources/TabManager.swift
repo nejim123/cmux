@@ -4016,7 +4016,12 @@ class TabManager: ObservableObject {
         return browserPanel.id
     }
 
-    /// Open a browser in the currently focused pane (as a new surface)
+    /// Open a browser in the currently focused pane.
+    ///
+    /// When a terminal is focused, attach the browser as a split beside it
+    /// (matching the CLI's `cmux browser open` pairing) so the terminal's agent
+    /// drives that browser. When a browser is already focused, keep the
+    /// new-surface-in-that-pane behavior instead of splitting again.
     @discardableResult
     func openBrowser(
         url: URL? = nil,
@@ -4024,10 +4029,11 @@ class TabManager: ObservableObject {
         insertAtEnd: Bool = false
     ) -> UUID? {
         guard let tabId = selectedTabId else { return nil }
+        let terminalFocused = tabs.first(where: { $0.id == tabId })?.focusedTerminalPanel != nil
         return openBrowser(
             inWorkspace: tabId,
             url: url,
-            preferSplitRight: false,
+            preferSplitRight: terminalFocused,
             preferredProfileID: preferredProfileID,
             insertAtEnd: insertAtEnd
         )
