@@ -1,0 +1,42 @@
+======================================================================
+cmux [90065]: 64-bit    Footprint: 118 MB (16384 bytes per page)
+======================================================================
+
+  Dirty      Clean  Reclaimable    Regions    Category
+    ---        ---          ---        ---    ---
+  64 MB        0 B        16 KB         20    MALLOC_SMALL
+  16 MB        0 B          0 B         73    dyld private memory
+  12 MB      48 KB          0 B        988    __DATA
+8987 KB      16 KB          0 B       1018    __DATA_CONST
+5280 KB        0 B          0 B        239    CoreAnimation
+4256 KB        0 B          0 B          6    untagged (VM_ALLOCATE)
+2352 KB        0 B          0 B          1    MALLOC_LARGE
+1650 KB        0 B          0 B          1    page table
+1190 KB        0 B          0 B       1017    unused dyld shared cache area
+ 720 KB        0 B          0 B          9    MALLOC metadata
+ 720 KB        0 B          0 B         20    stack
+ 176 KB        0 B          0 B          1    MALLOC_TINY
+ 155 KB        0 B          0 B         14    __DATA_DIRTY
+ 128 KB        0 B          0 B          6    CG raster data
+  68 KB        0 B          0 B          3    __TPRO_CONST
+  64 KB        0 B          0 B          1    Activity Tracing
+  48 KB        0 B          0 B          3    ColorSync
+  48 KB        0 B          0 B          6    ImageIO
+  32 KB        0 B          0 B          1    __AUTH_CONST
+  16 KB        0 B          0 B          1    Foundation
+  16 KB        0 B          0 B          1    os_alloc_once
+  16 KB        0 B          0 B          1    MALLOC_NANO
+    0 B      13 MB          0 B       1036    __TEXT
+    0 B      12 MB          0 B         72    mapped file
+    0 B      96 KB          0 B         87    __LINKEDIT
+    0 B        0 B          0 B          1    __FONT_DATA
+    0 B        0 B          0 B          5    SQLite page cache
+    0 B        0 B          0 B          1    IOSurface
+    0 B        0 B          0 B          1    __LLVM_COV
+    ---        ---          ---        ---    ---
+ 118 MB      25 MB        16 KB       4635    TOTAL
+
+Auxiliary data:
+    phys_footprint: 118 MB
+    phys_footprint_peak: 118 MB
+

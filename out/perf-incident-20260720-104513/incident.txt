@@ -1,0 +1,7 @@
+Symptom: Directory viewer hangs while scrolling
+User impact: iOS simulator UI becomes unresponsive
+Source: User report plus live process capture
+Target surface: iOS Simulator
+Build/version/tag: taskux, current installed simulator app
+Repro workload: Open directory viewer and scroll through home-directory entries
+Expected bad behavior: Sustained high CPU and unresponsive scrolling

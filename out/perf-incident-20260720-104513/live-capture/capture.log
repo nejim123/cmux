@@ -1,0 +1,38 @@
+[10:44:29] cmux app processes:
+ 1693   0.0  0.0  20544 01-12:48:15 S    /Users/abdulazizalbahar/Applications/cmux hq.app/Contents/MacOS/cmux-hq
+ 3964  13.4  0.3 177936 01-10:33:04 S    /Users/abdulazizalbahar/Library/Developer/Xcode/DerivedData/cmux-irdg/Build/Products/Debug/cmux DEV irdg.app/Contents/MacOS/cmux DEV
+ 4663   0.3  0.3 182464 01-10:11:32 S    /Users/abdulazizalbahar/Library/Developer/Xcode/DerivedData/cmux-irgate/Build/Products/Debug/cmux DEV irgate.app/Contents/MacOS/cmux DEV
+ 5466   0.8  0.3 181200       19:07 S    /Users/abdulazizalbahar/Library/Developer/Xcode/DerivedData/cmux-melba/Build/Products/Debug/cmux DEV melba.app/Contents/MacOS/cmux DEV
+ 7448   1.5  0.3 207936 01-10:10:56 S    /Users/abdulazizalbahar/Library/Developer/Xcode/DerivedData/cmux-dspch/Build/Products/Debug/cmux DEV dspch.app/Contents/MacOS/cmux DEV
+17371 101.9  0.7 441008 01-12:44:57 R    /Applications/cmux NIGHTLY.app/Contents/MacOS/cmux
+17936 127.6  0.4 235472       17:01 R    /Users/abdulazizalbahar/Library/Developer/Xcode/DerivedData/cmux-taskux/Build/Products/Debug/cmux DEV taskux.app/Contents/MacOS/cmux DEV
+21590   7.5  0.3 182848       16:36 S    /Users/abdulazizalbahar/Library/Developer/Xcode/DerivedData/cmux-sbrovl/Build/Products/Debug/cmux DEV sbrovl.app/Contents/MacOS/cmux DEV
+37219  96.7  0.3 228848 01-09:18:02 R    /Users/abdulazizalbahar/Library/Developer/Xcode/DerivedData/cmux-rfrsh/Build/Products/Debug/cmux DEV rfrsh.app/Contents/MacOS/cmux DEV
+38325  29.2  0.3 190512 01-11:44:31 R    /Users/abdulazizalbahar/Library/Developer/Xcode/DerivedData/cmux-onbv2/Build/Products/Debug/cmux DEV onbv2.app/Contents/MacOS/cmux DEV
+49767  14.7  0.5 304368       29:24 R    /Users/abdulazizalbahar/Library/Developer/Xcode/DerivedData/cmux-sbak/Build/Products/Debug/cmux DEV sbak.app/Contents/MacOS/cmux DEV
+53483   0.0  0.3 178896 01-10:22:44 S    /Users/abdulazizalbahar/Library/Developer/Xcode/DerivedData/cmux-idcanon/Build/Products/Debug/cmux DEV idcanon.app/Contents/MacOS/cmux DEV
+59860  13.1  0.3 181168 01-01:23:13 S    /Users/abdulazizalbahar/Library/Developer/Xcode/DerivedData/cmux-irvpn/Build/Products/Debug/cmux DEV irvpn.app/Contents/MacOS/cmux DEV
+61292 105.0  0.3 202528 01-10:21:08 R    /Users/abdulazizalbahar/Library/Developer/Xcode/DerivedData/cmux-wlist/Build/Products/Debug/cmux DEV wlist.app/Contents/MacOS/cmux DEV
+63055  10.0  0.3 201312       27:03 S    /Users/abdulazizalbahar/Library/Developer/Xcode/DerivedData/cmux-nfeed/Build/Products/Debug/cmux DEV nfeed.app/Contents/MacOS/cmux DEV
+73186   0.0  0.3 214912 01-11:58:06 S    /Users/abdulazizalbahar/Library/Developer/Xcode/DerivedData/cmux-onbrd/Build/Products/Debug/cmux DEV onbrd.app/Contents/MacOS/cmux DEV
+88336   3.1  0.3 177824    20:35:00 S    /Users/abdulazizalbahar/Library/Developer/Xcode/DerivedData/cmux-tsupgd/Build/Products/Debug/cmux DEV tsupgd.app/Contents/MacOS/cmux DEV
+88630   4.9  0.3 203904       04:00 S    /Users/abdulazizalbahar/Library/Developer/Xcode/DerivedData/cmux-rlyjwt/Build/Products/Debug/cmux DEV rlyjwt.app/Contents/MacOS/cmux DEV
+[10:44:29] target pid=90065 app=/Users/abdulazizalbahar/Library/Developer/CoreSimulator/Devices/9D18DAE3-9F58-430C-9C9F-B8E1366320C4/data/Containers/Bundle/Application/6E0F2901-A4D9-49CD-A9EC-F85D418FA044/cmux.app/cmux
+pid: 90065
+app: /Users/abdulazizalbahar/Library/Developer/CoreSimulator/Devices/9D18DAE3-9F58-430C-9C9F-B8E1366320C4/data/Containers/Bundle/Application/6E0F2901-A4D9-49CD-A9EC-F85D418FA044/cmux.app/cmux
+version: 
+macos: 26.5.2 (25F84)
+captured: Mon Jul 20 10:44:29 PDT 2026
+threads: 10
+  PID  %CPU %MEM    RSS      VSZ ELAPSED STAT   WQ
+90065  98.5  0.4 263888 410555568   03:37 Rs      5
+[10:44:29] sampling pid 90065 for 10s...
+Sampling process 90065 for 10 seconds with 1 millisecond of run time between samples
+Sampling completed, processing symbols...
+Sample analysis of process 90065 written to file /tmp/cmux-hang-20260720-104429/sample.txt
+[10:44:42] vmmap/footprint...
+[10:45:03] no known debug socket for this app (e.g. NIGHTLY); UI liveness NOT tested
+[10:45:03] requesting spindump via cmux-sudo (approve with Touch ID in the menu bar app; 120s timeout)...
+cmux-sudo: broker app not installed; run tools/cmux-sudo-broker/scripts/install.sh
+[10:45:03] WARN: cmux hq spindump not approved or failed (see capture.log)
+[10:45:03] xctrace 'Time Profiler' attach to 90065 for 20s...
