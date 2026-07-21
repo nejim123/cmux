@@ -878,7 +878,7 @@ final class FileExplorerStore: ObservableObject {
             directoryWatchTask = Task { @MainActor [weak self] in
                 for await _ in events {
                     guard let self else { break }
-                    self.reload()
+                    self.reload(soft: true)
                     self.refreshGitStatus()
                 }
             }
@@ -913,15 +913,28 @@ final class FileExplorerStore: ObservableObject {
     }
     #endif
 
-    func reload() {
+    /// Reloads the tree. Pass `soft: true` to keep the current nodes visible
+    /// while the new listing loads (used by the directory watcher), avoiding the
+    /// blank-then-repopulate flicker that clearing `rootNodes` up-front causes on
+    /// every filesystem event. `loadChildren` replaces `rootNodes` atomically, so
+    /// the old tree simply swaps for the new one.
+    func reload(soft: Bool = false) {
         #if DEBUG
-        NSLog("[FileExplorer] reload() path=\(rootPath) provider=\(type(of: provider).self)")
+        NSLog("[FileExplorer] reload(soft: \(soft)) path=\(rootPath) provider=\(type(of: provider).self)")
         #endif
         contentRevision &+= 1
         cancelAllLoads()
-        rootNodes = []
-        nodesByPath = [:]
-        guard !rootPath.isEmpty, provider != nil else { return }
+        if !soft {
+            rootNodes = []
+            nodesByPath = [:]
+        }
+        guard !rootPath.isEmpty, provider != nil else {
+            if soft {
+                rootNodes = []
+                nodesByPath = [:]
+            }
+            return
+        }
         isRootLoading = true
         let path = rootPath
         let task = Task { [weak self] in
