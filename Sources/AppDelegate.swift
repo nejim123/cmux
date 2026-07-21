@@ -9460,7 +9460,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCent
         }
         guard let manager = tabManagerFor(tabId: workspaceId),
               let workspace = manager.tabs.first(where: { $0.id == workspaceId }),
-              let terminalPanelId = workspace.terminalPanelForDesignModeDelivery?.id else {
+              let terminalPanelId = workspace.focusedOrFirstTerminalPanel?.id else {
             return
         }
         manager.focusTab(workspaceId, surfaceId: terminalPanelId, suppressFlash: true)

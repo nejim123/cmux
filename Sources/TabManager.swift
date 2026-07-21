@@ -4018,10 +4018,13 @@ class TabManager: ObservableObject {
 
     /// Open a browser in the currently focused pane.
     ///
-    /// When a terminal is focused, attach the browser as a split beside it
-    /// (matching the CLI's `cmux browser open` pairing) so the terminal's agent
-    /// drives that browser. When a browser is already focused, keep the
-    /// new-surface-in-that-pane behavior instead of splitting again.
+    /// When the workspace has a terminal, attach the browser as a split beside it
+    /// (reusing an existing right-side browser pane when present) so it opens on
+    /// the side panel paired with the terminal — matching the CLI's
+    /// `cmux browser open`. We key off "the workspace has a terminal" rather than
+    /// "a terminal is focused" because invoking the open action (toolbar button,
+    /// command palette) moves focus off the terminal; keying on focus would fall
+    /// back to stacking the browser as a tab in the current pane.
     @discardableResult
     func openBrowser(
         url: URL? = nil,
@@ -4029,11 +4032,11 @@ class TabManager: ObservableObject {
         insertAtEnd: Bool = false
     ) -> UUID? {
         guard let tabId = selectedTabId else { return nil }
-        let terminalFocused = tabs.first(where: { $0.id == tabId })?.focusedTerminalPanel != nil
+        let hasTerminal = tabs.first(where: { $0.id == tabId })?.focusedOrFirstTerminalPanel != nil
         return openBrowser(
             inWorkspace: tabId,
             url: url,
-            preferSplitRight: terminalFocused,
+            preferSplitRight: hasTerminal,
             preferredProfileID: preferredProfileID,
             insertAtEnd: insertAtEnd
         )
