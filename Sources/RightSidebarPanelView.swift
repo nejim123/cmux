@@ -276,13 +276,18 @@ struct RightSidebarPanelView: View {
         Button {
             openSelectionInCursor()
         } label: {
-            HeaderChromeIconStyle.symbol("arrow.up.forward.app")
+            HStack(spacing: 3) {
+                Image(systemName: "arrow.up.forward.app")
+                    .imageScale(.small)
+                Text(verbatim: "Cursor")
+            }
+            .font(.system(size: 11, weight: .medium))
+            .foregroundStyle(.secondary)
+            .padding(.horizontal, 7)
+            .frame(height: RightSidebarChromeMetrics.headerControlSize)
+            .contentShape(Rectangle())
         }
-        .buttonStyle(RightSidebarHeaderIconButtonStyle(iconGeometryKeyPrefix: "rightSidebarHeaderOpenInCursorIcon"))
-        .frame(
-            width: RightSidebarChromeMetrics.headerControlSize,
-            height: RightSidebarChromeMetrics.headerControlSize
-        )
+        .buttonStyle(.plain)
         .rightSidebarHeaderControlAlignment()
         .safeHelp(String(localized: "rightSidebar.openInCursor.tooltip", defaultValue: "Open in Cursor"))
         .accessibilityLabel(String(localized: "rightSidebar.openInCursor.accessibilityLabel", defaultValue: "Open in Cursor"))
