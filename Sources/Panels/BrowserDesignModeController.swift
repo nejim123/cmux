@@ -311,21 +311,28 @@ final class BrowserDesignModeController {
             || !requestedChange.isEmpty
             || hasInFlightAnnotation
         if hasContent {
-            requestedChange = ""
-            promptRuns = []
-            promptResetGeneration &+= 1
-            didCopy = false
-            errorMessage = nil
-            guard let webView else { return }
-            if let value = try? await evaluate(
-                "return globalThis.__cmuxDesignMode?.clearSelection();",
-                arguments: [:],
-                in: webView
-            ), let next = try? BrowserDesignModeSupport.decodeSnapshot(value) {
-                apply(next)
-            }
+            await resetPromptAndSelection()
         } else {
             await setEnabled(false, reason: "escape")
+        }
+    }
+
+    /// Clears the typed instruction, composed pills, and the page-side selection
+    /// so the user can start a fresh pick without deleting text. Stays in Design
+    /// Mode. Shared by Escape and the post-submit clear.
+    func resetPromptAndSelection() async {
+        requestedChange = ""
+        promptRuns = []
+        promptResetGeneration &+= 1
+        didCopy = false
+        errorMessage = nil
+        guard let webView else { return }
+        if let value = try? await evaluate(
+            "return globalThis.__cmuxDesignMode?.clearSelection();",
+            arguments: [:],
+            in: webView
+        ), let next = try? BrowserDesignModeSupport.decodeSnapshot(value) {
+            apply(next)
         }
     }
 
